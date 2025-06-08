@@ -5,6 +5,7 @@
 
   "message_verify": "{0} has posted:\n{1}\n{3}\n{2}",
   "message_showcase": "posted in #{0}",
+  "message_showcased_by": "-# showcased by {0}",
   "message_gallery": [
     "shared their art in #{0}",
     "drew an artwork for #{0}",
