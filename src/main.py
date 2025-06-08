@@ -83,6 +83,7 @@ async def command_publish(interaction: discord.Interaction, message: discord.Mes
     success = False      # Reactions are added to messages based on success or failure
     fail_quietly = True  # Failure reactions are hidden by default
     react = True         # Whether to suppress reactions (e.g. in case interaction message was removed)
+    reply_url = message.jump_url    # Link appended to bot reply message
 
     # We avoid duplicate publish actions by checking for reactions
     posted = False
@@ -153,6 +154,7 @@ async def command_publish(interaction: discord.Interaction, message: discord.Mes
             reply = strings.get("publish_response_remove_self")
             success = True
             react = False
+            reply_url = linked_message.jump_url
             await message.delete()
 
             # Remove publish reactions from original message to allow for republishing
@@ -168,7 +170,7 @@ async def command_publish(interaction: discord.Interaction, message: discord.Mes
     emoji = strings.emoji_success if success else strings.emoji_failure
     if reply is None:
         reply = strings.get("publish_error_generic")
-    await interaction.response.send_message(f"{emoji}\t{reply}\n{message.jump_url}", ephemeral=True)
+    await interaction.response.send_message(f"{emoji}\t{reply}\n{reply_url}", ephemeral=True)
 
     # Add a reaction to the post to show it's been interacted with
     if message is not None and (react and (success or not fail_quietly)):
